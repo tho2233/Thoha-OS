@@ -1,0 +1,4698 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>THOHA OS</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+    --bg:#111214;
+    --bg-soft:#18191c;
+    --card:rgba(255,255,255,.055);
+    --card-hover:rgba(255,255,255,.085);
+    --border:rgba(255,255,255,.11);
+
+    --white:#e7e7e7;
+    --muted:#85878d;
+
+    --gold:#c6a467;
+    --gold-light:#dec489;
+
+    --green:#8db89b;
+    --red:#c88e8e;
+
+    --shadow:0 20px 60px rgba(0,0,0,.28);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:'Inter',sans-serif;
+    color:var(--white);
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(198,164,103,.09),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 100%,
+            rgba(255,255,255,.035),
+            transparent 30%
+        ),
+        var(--bg);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+
+    width:245px;
+
+    padding:28px 18px;
+
+    background:rgba(15,16,18,.76);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+
+    border-right:1px solid var(--border);
+
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:0 12px 32px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:12px;
+
+    border:1px solid var(--gold);
+
+    color:var(--gold-light);
+
+    font-weight:800;
+}
+
+.logo-title{
+    font-size:16px;
+    font-weight:800;
+}
+
+.logo-subtitle{
+    margin-top:4px;
+
+    font-size:9px;
+    letter-spacing:1.5px;
+
+    color:var(--muted);
+}
+
+.nav-label{
+    padding:0 12px 10px;
+
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1.5px;
+
+    color:#55575c;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.nav button{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:13px 14px;
+
+    border:1px solid transparent;
+    border-radius:12px;
+
+    background:transparent;
+    color:var(--muted);
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.nav button:hover{
+    background:rgba(255,255,255,.045);
+    color:var(--white);
+}
+
+.nav button.active{
+    color:var(--gold-light);
+
+    background:rgba(198,164,103,.10);
+
+    border-color:rgba(198,164,103,.17);
+}
+
+.nav-icon{
+    width:20px;
+
+    text-align:center;
+
+    font-size:16px;
+}
+
+.sidebar-footer{
+    position:absolute;
+
+    left:30px;
+    right:30px;
+    bottom:25px;
+
+    color:#55575c;
+
+    font-size:9px;
+    line-height:1.7;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    width:calc(100% - 245px);
+
+    margin-left:245px;
+
+    padding:30px 38px 60px;
+}
+
+.page{
+    display:none;
+
+    animation:pageIn .35s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    margin-bottom:30px;
+}
+
+.eyebrow{
+    margin-bottom:8px;
+
+    color:var(--gold);
+
+    font-size:10px;
+    font-weight:600;
+
+    letter-spacing:2px;
+}
+
+h1,
+h2{
+    letter-spacing:-1px;
+}
+
+.page-title{
+    font-size:28px;
+    font-weight:700;
+}
+
+.subtitle{
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.clock-container{
+    text-align:right;
+}
+
+.clock{
+    font-size:25px;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+.date{
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    padding:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+}
+
+.card-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.card-title h3{
+    font-size:13px;
+    font-weight:600;
+}
+
+.card-title span{
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.hero{
+    display:grid;
+
+    grid-template-columns:1.35fr .65fr;
+
+    gap:18px;
+
+    margin-bottom:18px;
+}
+
+.schedule-card{
+    position:relative;
+
+    min-height:290px;
+
+    overflow:hidden;
+}
+
+.schedule-card::after{
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    right:-110px;
+    bottom:-120px;
+
+    border:1px solid rgba(198,164,103,.08);
+
+    border-radius:50%;
+}
+
+.schedule-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.live{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    color:var(--green);
+
+    font-size:9px;
+    letter-spacing:1.5px;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:0 0 10px var(--green);
+}
+
+.day-label{
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+.schedule-label{
+    margin-bottom:9px;
+
+    color:var(--gold);
+
+    font-size:10px;
+    letter-spacing:1.5px;
+}
+
+.current-subject{
+    font-size:34px;
+    font-weight:800;
+
+    letter-spacing:-1.5px;
+}
+
+.current-time{
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.schedule-bottom{
+    position:absolute;
+
+    left:22px;
+    right:22px;
+    bottom:22px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+}
+
+.countdown{
+    font-size:11px;
+}
+
+.next{
+    text-align:right;
+}
+
+.next-label{
+    margin-bottom:4px;
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+.next-name{
+    color:var(--gold-light);
+
+    font-size:12px;
+    font-weight:600;
+}
+
+.next-time{
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+/* =========================
+   MONEY CARD
+========================= */
+
+.money-card{
+    min-height:290px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.money-icon{
+    width:43px;
+    height:43px;
+
+    display:grid;
+    place-items:center;
+
+    margin-bottom:25px;
+
+    border-radius:14px;
+
+    color:var(--gold-light);
+
+    background:rgba(198,164,103,.09);
+
+    border:1px solid rgba(198,164,103,.18);
+
+    font-size:19px;
+}
+
+.money-label{
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.money-balance{
+    margin:7px 0;
+
+    color:var(--gold-light);
+
+    font-size:30px;
+    font-weight:800;
+
+    letter-spacing:-1.5px;
+}
+
+.money-note{
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.money-footer{
+    display:flex;
+    justify-content:space-between;
+
+    padding-top:16px;
+
+    border-top:1px solid var(--border);
+}
+
+.money-footer span{
+    display:block;
+
+    margin-bottom:5px;
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+.money-footer b{
+    font-size:11px;
+}
+
+.green{
+    color:var(--green);
+}
+
+.red{
+    color:var(--red);
+}
+
+.gold{
+    color:var(--gold-light);
+}
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
+    display:grid;
+
+    gap:18px;
+}
+
+.grid-2{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.grid-3{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.grid-4{
+    grid-template-columns:repeat(4,1fr);
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress{
+    width:100%;
+    height:5px;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.06);
+}
+
+.progress-bar{
+    height:100%;
+
+    width:0;
+
+    border-radius:20px;
+
+    background:var(--gold);
+
+    transition:width .4s ease;
+}
+
+/* =========================
+   TASK LIST
+========================= */
+
+.task-list{
+    display:flex;
+    flex-direction:column;
+
+    margin-top:15px;
+}
+
+.task-item{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    padding:11px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+.task-item:last-child{
+    border-bottom:none;
+}
+
+.check{
+    width:19px;
+    height:19px;
+
+    display:grid;
+    place-items:center;
+
+    flex-shrink:0;
+
+    border:1px solid #55575c;
+    border-radius:6px;
+
+    background:transparent;
+
+    color:#111;
+
+    cursor:pointer;
+}
+
+.check.done{
+    background:var(--gold);
+    border-color:var(--gold);
+}
+
+.task-text{
+    flex:1;
+
+    font-size:11px;
+}
+
+.task-text.done{
+    color:#606166;
+
+    text-decoration:line-through;
+}
+
+.task-date{
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+/* =========================
+   ACTIVITY
+========================= */
+
+.activity-list{
+    display:flex;
+    flex-direction:column;
+}
+
+.activity{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+.activity:last-child{
+    border-bottom:none;
+}
+
+.activity-time{
+    width:45px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.activity-name{
+    flex:1;
+
+    font-size:11px;
+}
+
+.activity-status{
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+.activity.active .activity-name{
+    color:var(--gold-light);
+    font-weight:600;
+}
+
+.activity.active .activity-status{
+    color:var(--green);
+}
+
+.activity.past{
+    opacity:.4;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+    padding:10px 14px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:rgba(255,255,255,.045);
+    color:var(--white);
+
+    font-size:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    background:rgba(255,255,255,.09);
+}
+
+.btn.gold-btn{
+    background:var(--gold);
+    border-color:var(--gold);
+
+    color:#171513;
+
+    font-weight:700;
+}
+
+.btn.gold-btn:hover{
+    background:var(--gold-light);
+}
+
+.btn.danger{
+    color:var(--red);
+
+    border-color:rgba(200,142,142,.2);
+}
+
+/* =========================
+   FORMS
+========================= */
+
+.form{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:9px;
+}
+
+input,
+select{
+    min-width:0;
+
+    padding:11px 12px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    outline:none;
+
+    background:rgba(255,255,255,.04);
+    color:var(--white);
+
+    font-size:11px;
+}
+
+input::placeholder{
+    color:#5f6166;
+}
+
+input:focus,
+select:focus{
+    border-color:var(--gold);
+}
+
+select option{
+    background:#1a1b1e;
+}
+
+.form input,
+.form select{
+    flex:1;
+}
+
+/* =========================
+   TODO
+========================= */
+
+.todo-layout{
+    display:grid;
+
+    grid-template-columns:.8fr 1.2fr;
+
+    gap:18px;
+}
+
+.todo-stats{
+    display:flex;
+    gap:28px;
+
+    margin-top:28px;
+}
+
+.todo-stat strong{
+    display:block;
+
+    font-size:23px;
+}
+
+.todo-stat span{
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+.todo-list{
+    display:flex;
+    flex-direction:column;
+}
+
+.todo-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:14px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+.todo-content{
+    flex:1;
+}
+
+.todo-content h4{
+    font-size:11px;
+    font-weight:500;
+}
+
+.todo-content h4.done{
+    color:#606166;
+    text-decoration:line-through;
+}
+
+.todo-content p{
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+.delete-btn{
+    border:0;
+
+    background:transparent;
+
+    color:#5e6065;
+
+    font-size:17px;
+
+    cursor:pointer;
+}
+
+.delete-btn:hover{
+    color:var(--red);
+}
+
+.empty{
+    padding:20px 0;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+/* =========================
+   CALCULATOR
+========================= */
+
+.calc-layout{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+}
+
+.calc-display{
+    padding:18px;
+
+    margin-bottom:13px;
+
+    border:1px solid var(--border);
+    border-radius:14px;
+
+    background:rgba(0,0,0,.18);
+
+    text-align:right;
+}
+
+.calc-expression{
+    min-height:17px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.calc-result{
+    margin-top:7px;
+
+    font-size:29px;
+    font-weight:700;
+}
+
+.calc-grid{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:8px;
+}
+
+.calc-grid button{
+    height:48px;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    background:rgba(255,255,255,.04);
+    color:var(--white);
+
+    cursor:pointer;
+}
+
+.calc-grid button:hover{
+    background:rgba(255,255,255,.09);
+}
+
+.calc-grid .operator{
+    color:var(--gold-light);
+}
+
+.calc-grid .equal{
+    background:var(--gold);
+    border-color:var(--gold);
+
+    color:#151515;
+}
+
+.calc-grid .clear{
+    color:var(--red);
+}
+
+.tool-result{
+    margin-top:14px;
+
+    padding:13px;
+
+    border:1px solid rgba(198,164,103,.15);
+    border-radius:12px;
+
+    background:rgba(198,164,103,.06);
+
+    color:var(--gold-light);
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+/* =========================
+   MONEY TABLE
+========================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    font-size:10px;
+}
+
+th{
+    padding:12px;
+
+    border-bottom:1px solid var(--border);
+
+    color:var(--muted);
+
+    font-size:9px;
+    font-weight:500;
+
+    text-align:left;
+}
+
+td{
+    padding:13px 12px;
+
+    border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+th:first-child,
+td:first-child{
+    padding-left:0;
+}
+
+th:last-child,
+td:last-child{
+    padding-right:0;
+
+    text-align:right;
+}
+
+.badge{
+    display:inline-block;
+
+    padding:5px 8px;
+
+    border-radius:7px;
+
+    background:rgba(255,255,255,.05);
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+.amount-income{
+    color:var(--green);
+}
+
+.amount-expense{
+    color:var(--red);
+}
+
+/* =========================
+   SCHEDULE SETTINGS
+========================= */
+
+.schedule-editor{
+    display:flex;
+    flex-direction:column;
+
+    gap:9px;
+}
+
+.schedule-row{
+    display:grid;
+
+    grid-template-columns:105px 1fr 105px 38px;
+
+    gap:8px;
+}
+
+.schedule-row input{
+    width:100%;
+}
+
+.remove-schedule{
+    border:1px solid rgba(200,142,142,.2);
+    border-radius:9px;
+
+    background:rgba(200,142,142,.05);
+
+    color:var(--red);
+
+    cursor:pointer;
+}
+
+.settings-note{
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.8;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-top{
+    display:none;
+}
+
+.bottom-nav{
+    display:none;
+}
+
+@media(max-width:1050px){
+
+    .hero,
+    .todo-layout,
+    .calc-layout{
+        grid-template-columns:1fr;
+    }
+
+    .grid-3{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        width:100%;
+
+        margin-left:0;
+
+        padding:18px 14px 90px;
+    }
+
+    .mobile-top{
+        display:flex;
+
+        justify-content:space-between;
+        align-items:center;
+
+        margin-bottom:25px;
+    }
+
+    .mobile-logo{
+        font-size:15px;
+        font-weight:800;
+    }
+
+    .mobile-logo span{
+        color:var(--gold-light);
+    }
+
+    .mobile-home{
+        width:38px;
+        height:38px;
+
+        border:1px solid var(--border);
+        border-radius:11px;
+
+        background:var(--card);
+        color:var(--white);
+
+        cursor:pointer;
+    }
+
+    .topbar{
+        margin-bottom:22px;
+    }
+
+    .page-title{
+        font-size:23px;
+    }
+
+    .clock-container{
+        display:none;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:18px;
+
+        border-radius:17px;
+    }
+
+    .current-subject{
+        font-size:29px;
+    }
+
+    .schedule-card,
+    .money-card{
+        min-height:270px;
+    }
+
+    .form{
+        flex-direction:column;
+    }
+
+    .form input,
+    .form select,
+    .form button{
+        width:100%;
+    }
+
+    .schedule-row{
+        grid-template-columns:80px 1fr 80px 35px;
+    }
+
+    .bottom-nav{
+        position:fixed;
+
+        left:12px;
+        right:12px;
+        bottom:12px;
+
+        z-index:200;
+
+        display:flex;
+
+        padding:7px;
+
+        border:1px solid var(--border);
+        border-radius:17px;
+
+        background:rgba(24,25,28,.88);
+
+        backdrop-filter:blur(25px);
+        -webkit-backdrop-filter:blur(25px);
+
+        box-shadow:0 10px 40px rgba(0,0,0,.35);
+    }
+
+    .bottom-nav button{
+        flex:1;
+
+        padding:7px 2px;
+
+        border:0;
+        border-radius:10px;
+
+        background:transparent;
+
+        color:var(--muted);
+
+        font-size:8px;
+
+        cursor:pointer;
+    }
+
+    .bottom-nav button.active{
+        color:var(--gold-light);
+
+        background:rgba(198,164,103,.09);
+    }
+
+    .bottom-nav span{
+        display:block;
+
+        margin-bottom:4px;
+
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            T
+        </div>
+
+        <div>
+            <div class="logo-title">
+                THOHA OS
+            </div>
+
+            <div class="logo-subtitle">
+                PERSONAL SYSTEM
+            </div>
+        </div>
+
+    </div>
+
+    <div class="nav-label">
+        MENU UTAMA
+    </div>
+
+    <nav class="nav">
+
+        <button class="active" data-page="home">
+            <span class="nav-icon">⌂</span>
+            Beranda
+        </button>
+
+        <button data-page="todo">
+            <span class="nav-icon">✓</span>
+            To-Do List
+        </button>
+
+        <button data-page="calculator">
+            <span class="nav-icon">▣</span>
+            All-in-One Calculator
+        </button>
+
+        <button data-page="money">
+            <span class="nav-icon">◈</span>
+            Money Tracker
+        </button>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        THOHA OS <br>
+        Built for everyday life.
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <!-- MOBILE TOP -->
+
+    <div class="mobile-top">
+
+        <div class="mobile-logo">
+            THOHA <span>OS</span>
+        </div>
+
+        <button class="mobile-home" onclick="showPage('home')">
+            ⌂
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         BERANDA
+    ========================= -->
+
+    <section class="page active" id="home">
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="eyebrow">
+                    PERSONAL DASHBOARD
+                </div>
+
+                <h1 id="greeting">
+    Good Morning, <span>Thoha.</span>
+                </h1>
+
+                <p class="subtitle">
+                    Satu tempat untuk mengatur hari kamu.
+                </p>
+
+            </div>
+
+            <div class="clock-container">
+
+                <div class="clock" id="clock">
+                    00:00:00
+                </div>
+
+                <div class="date" id="date">
+                    -
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero">
+
+            <!-- SCHEDULE -->
+
+            <div class="card schedule-card">
+
+                <div class="schedule-top">
+
+                    <div class="live">
+                        <span class="live-dot"></span>
+                        LIVE SCHEDULE
+                    </div>
+
+                    <div class="day-label" id="scheduleDay">
+                        SENIN
+                    </div>
+
+                </div>
+
+                <div class="schedule-label" id="scheduleLabel">
+                    SEDANG BERLANGSUNG
+                </div>
+
+                <div class="current-subject" id="currentSubject">
+                    Memuat...
+                </div>
+
+                <div class="current-time" id="currentTime">
+                    --
+                </div>
+
+                <div class="schedule-bottom">
+
+                    <div class="countdown" id="countdown">
+                        Memuat...
+                    </div>
+
+                    <div class="next">
+
+                        <div class="next-label">
+                            NEXT
+                        </div>
+
+                        <div class="next-name" id="nextName">
+                            --
+                        </div>
+
+                        <div class="next-time" id="nextTime">
+                            --
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MONEY -->
+
+            <div class="card money-card">
+
+                <div>
+
+                    <div class="money-icon">
+                        ◈
+                    </div>
+
+                    <div class="money-label">
+                        TOTAL UANG DI TANGAN
+                    </div>
+
+                    <div class="money-balance" id="homeBalance">
+                        Rp0
+                    </div>
+
+                    <div class="money-note">
+                        Saldo dari Money Tracker
+                    </div>
+
+                </div>
+
+                <div class="money-footer">
+
+                    <div>
+                        <span>
+                            Pemasukan
+                        </span>
+
+                        <b class="green" id="homeIncome">
+                            Rp0
+                        </b>
+                    </div>
+
+                    <div>
+                        <span>
+                            Pengeluaran
+                        </span>
+
+                        <b class="red" id="homeExpense">
+                            Rp0
+                        </b>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid grid-2">
+
+            <!-- TASKS -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>
+                        Today's Tasks
+                    </h3>
+
+                    <span id="taskProgressText">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        id="taskProgressBar">
+                    </div>
+
+                </div>
+
+                <div
+                    class="task-list"
+                    id="homeTasks">
+                </div>
+
+                <button
+                    class="btn"
+                    style="margin-top:15px"
+                    onclick="showPage('todo')">
+
+                    Lihat semua tugas →
+
+                </button>
+
+            </div>
+
+
+            <!-- TODAY SCHEDULE -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>
+                        Jadwal Hari Ini
+                    </h3>
+
+                    <span id="scheduleCount">
+                        0 kegiatan
+                    </span>
+
+                </div>
+
+                <div
+                    class="activity-list"
+                    id="homeSchedule">
+                </div>
+
+                <button
+                    class="btn"
+                    style="margin-top:15px"
+                    onclick="showPage('schedule')">
+
+                    Atur jadwal →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         TODO
+    ========================= -->
+
+    <section class="page" id="todo">
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="eyebrow">
+                    PRODUCTIVITY
+                </div>
+
+                <h1 class="page-title">
+                    To-Do List
+                </h1>
+
+                <p class="subtitle">
+                    Catat apa yang harus kamu selesaikan.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="todo-layout">
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>
+                        Tambah Tugas
+                    </h3>
+
+                </div>
+
+                <form
+                    class="form"
+                    id="todoForm">
+
+                    <input
+                        id="todoInput"
+                        type="text"
+                        placeholder="Contoh: Kerjakan tugas Sosiologi"
+                        required>
+
+                    <input
+                        id="todoDate"
+                        type="date">
+
+                    <select id="todoPriority">
+
+                        <option value="normal">
+                            Prioritas normal
+                        </option>
+
+                        <option value="high">
+                            Prioritas tinggi
+                        </option>
+
+                        <option value="low">
+                            Prioritas rendah
+                        </option>
+
+                    </select>
+
+                    <button
+                        class="btn gold-btn"
+                        type="submit">
+
+                        + Tambah Tugas
+
+                    </button>
+
+                </form>
+
+
+                <div class="todo-stats">
+
+                    <div class="todo-stat">
+
+                        <strong id="todoTotal">
+                            0
+                        </strong>
+
+                        <span>
+                            Total tugas
+                        </span>
+
+                    </div>
+
+                    <div class="todo-stat">
+
+                        <strong id="todoDone">
+                            0
+                        </strong>
+
+                        <span>
+                            Selesai
+                        </span>
+
+                    </div>
+
+                    <div class="todo-stat">
+
+                        <strong id="todoRemaining">
+                            0
+                        </strong>
+
+                        <span>
+                            Tersisa
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="progress"
+                    style="margin-top:20px">
+
+                    <div
+                        class="progress-bar"
+                        id="todoProgressBar">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>
+                        Daftar Tugas
+                    </h3>
+
+                    <span>
+                        Semua tugas
+                    </span>
+
+                </div>
+
+                <div
+                    class="todo-list"
+                    id="todoList">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CALCULATOR
+    ========================= -->
+
+    <section class="page" id="calculator">
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="eyebrow">
+                    TOOLS
+                </div>
+
+                <h1 class="page-title">
+                    All-in-One Calculator
+                </h1>
+
+                <p class="subtitle">
+                    Kalkulator untuk kebutuhan sehari-hari.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="calc-layout">
+
+            <!-- BASIC CALCULATOR -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>
+                        Kalkulator Biasa
+                    </h3>
+
+                    <span>
+                        Basic
+                    </span>
+
+                </div>
+
+                <div class="calc-display">
+
+                    <div
+                        class="calc-expression"
+                        id="calcExpression">
+                    </div>
+
+                    <div
+                        class="calc-result"
+                        id="calcResult">
+
+                        0
+
+                    </div>
+
+                </div>
+
+
+                <div class="calc-grid">
+
+                    <button
+                        class="clear"
+                        onclick="calcClear()">
+                        C
+                    </button>
+
+                    <button onclick="calcBackspace()">
+                        ⌫
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="calcInput('%')">
+                        %
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="calcInput('/')">
+                        ÷
+                    </button>
+
+
+                    <button onclick="calcInput('7')">
+                        7
+                    </button>
+
+                    <button onclick="calcInput('8')">
+                        8
+                    </button>
+
+                    <button onclick="calcInput('9')">
+                        9
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="calcInput('*')">
+                        ×
+                    </button>
+
+
+                    <button onclick="calcInput('4')">
+                        4
+                    </button>
+
+                    <button onclick="calcInput('5')">
+                        5
+                    </button>
+
+                    <button onclick="calcInput('6')">
+                        6
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="calcInput('-')">
+                        −
+                    </button>
+
+
+                    <button onclick="calcInput('1')">
+                        1
+                    </button>
+
+                    <button onclick="calcInput('2')">
+                        2
+                    </button>
+
+                    <button onclick="calcInput('3')">
+                        3
+                    </button>
+
+                    <button
+                        class="operator"
+                        onclick="calcInput('+')">
+                        +
+                    </button>
+
+
+                    <button onclick="calcInput('0')">
+                        0
+                    </button>
+
+                    <button onclick="calcInput('.')">
+                        .
+                    </button>
+
+                    <button
+                        class="equal"
+                        style="grid-column:span 2"
+                        onclick="calcEqual()">
+
+                        =
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- FINANCE CALCULATOR -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>
+                        Kalkulator Keuangan
+                    </h3>
+
+                    <span>
+                        Useful
+                    </span>
+
+                </div>
+
+                <select
+                    id="financeTool"
+                    onchange="renderFinanceTool()"
+                    style="width:100%;margin-bottom:15px">
+
+                    <option value="discount">
+                        Diskon
+                    </option>
+
+                    <option value="installment">
+                        Cicilan
+                    </option>
+
+                    <option value="saving">
+                        Target Tabungan
+                    </option>
+
+                    <option value="percent">
+                        Persentase
+                    </option>
+
+                </select>
+
+                <div id="financeForm"></div>
+
+                <div id="financeResult"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONVERTER -->
+
+        <div
+            class="card"
+            style="margin-top:18px">
+
+            <div class="card-title">
+
+                <h3>
+                    Konversi Satuan
+                </h3>
+
+                <span>
+                    Quick converter
+                </span>
+
+            </div>
+
+            <div class="form">
+
+                <input
+                    id="convertValue"
+                    type="number"
+                    placeholder="Masukkan angka">
+
+                <select id="convertType">
+
+                    <option value="km">
+                        Kilometer → Meter
+                    </option>
+
+                    <option value="m">
+                        Meter → Centimeter
+                    </option>
+
+                    <option value="kg">
+                        Kilogram → Gram
+                    </option>
+
+                    <option value="liter">
+                        Liter → Milliliter
+                    </option>
+
+                    <option value="hour">
+                        Jam → Menit
+                    </option>
+
+                    <option value="minute">
+                        Menit → Detik
+                    </option>
+
+                </select>
+
+                <button
+                    class="btn gold-btn"
+                    onclick="convertUnit()">
+
+                    Hitung
+
+                </button>
+
+            </div>
+
+            <div id="convertResult"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MONEY TRACKER
+    ========================= -->
+
+    <section class="page" id="money">
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="eyebrow">
+                    FINANCE
+                </div>
+
+                <h1 class="page-title">
+                    Money Tracker
+                </h1>
+
+                <p class="subtitle">
+                    Pantau uang yang masuk dan keluar.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="grid grid-3"
+            style="margin-bottom:18px">
+
+            <div class="card">
+
+                <div class="stat-label">
+                    TOTAL SALDO
+                </div>
+
+                <div
+                    class="stat-value gold"
+                    id="moneyBalance">
+
+                    Rp0
+
+                </div>
+
+                <div class="small">
+                    Uang yang tersedia sekarang
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="stat-label">
+                    TOTAL PEMASUKAN
+                </div>
+
+                <div
+                    class="stat-value green"
+                    id="moneyIncome">
+
+                    Rp0
+
+                </div>
+
+                <div class="small">
+                    Semua uang yang masuk
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="stat-label">
+                    TOTAL PENGELUARAN
+                </div>
+
+                <div
+                    class="stat-value red"
+                    id="moneyExpense">
+
+                    Rp0
+
+                </div>
+
+                <div class="small">
+                    Semua uang yang keluar
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="card"
+            style="margin-bottom:18px">
+
+            <div class="card-title">
+
+                <h3>
+                    Tambah Transaksi
+                </h3>
+
+            </div>
+
+            <form
+                class="form"
+                id="moneyForm">
+
+                <input
+                    id="moneyDesc"
+                    placeholder="Contoh: Uang saku / Jajan"
+                    required>
+
+                <input
+                    id="moneyAmount"
+                    type="number"
+                    placeholder="Jumlah Rp"
+                    min="0"
+                    required>
+
+                <select id="moneyType">
+
+                    <option value="income">
+                        Pemasukan
+                    </option>
+
+                    <option value="expense">
+                        Pengeluaran
+                    </option>
+
+                </select>
+
+                <select id="moneyCategory">
+
+                    <option>
+                        Makanan
+                    </option>
+
+                    <option>
+                        Transportasi
+                    </option>
+
+                    <option>
+                        Sekolah
+                    </option>
+
+                    <option>
+                        Project
+                    </option>
+
+                    <option>
+                        Tabungan
+                    </option>
+
+                    <option>
+                        Lainnya
+                    </option>
+
+                </select>
+
+                <button
+                    class="btn gold-btn"
+                    type="submit">
+
+                    + Simpan
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <h3>
+                    Riwayat Transaksi
+                </h3>
+
+                <button
+                    class="btn danger"
+                    onclick="clearMoney()">
+
+                    Hapus semua
+
+                </button>
+
+            </div>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Transaksi
+                            </th>
+
+                            <th>
+                                Kategori
+                            </th>
+
+                            <th>
+                                Tanggal
+                            </th>
+
+                            <th>
+                                Jumlah
+                            </th>
+
+                            <th></th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="moneyTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCHEDULE SETTINGS
+    ========================= -->
+
+    <section
+        class="page"
+        id="schedule">
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="eyebrow">
+                    SYSTEM SETTINGS
+                </div>
+
+                <h1 class="page-title">
+                    Pengaturan Jadwal
+                </h1>
+
+                <p class="subtitle">
+                    Atur jadwal agar Beranda otomatis mengikuti waktu.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <h3>
+                    Pilih Hari
+                </h3>
+
+                <span>
+                    Tersimpan otomatis
+                </span>
+
+            </div>
+
+            <select
+                id="scheduleDaySelect"
+                onchange="renderScheduleEditor()"
+                style="width:100%;margin-bottom:18px">
+
+                <option value="1">
+                    Senin
+                </option>
+
+                <option value="2">
+                    Selasa
+                </option>
+
+                <option value="3">
+                    Rabu
+                </option>
+
+                <option value="4">
+                    Kamis
+                </option>
+
+                <option value="5">
+                    Jumat
+                </option>
+
+                <option value="6">
+                    Sabtu
+                </option>
+
+                <option value="0">
+                    Minggu
+                </option>
+
+            </select>
+
+
+            <div
+                class="schedule-editor"
+                id="scheduleEditor">
+            </div>
+
+
+            <button
+                class="btn gold-btn"
+                style="margin-top:18px"
+                onclick="addScheduleRow()">
+
+                + Tambah Kegiatan
+
+            </button>
+
+            <button
+                class="btn"
+                style="margin-top:18px;margin-left:7px"
+                onclick="saveSchedule()">
+
+                Simpan Jadwal
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="card"
+            style="margin-top:18px">
+
+            <div class="card-title">
+
+                <h3>
+                    Cara Kerja
+                </h3>
+
+            </div>
+
+            <p class="settings-note">
+
+                THOHA OS membaca jam perangkat secara realtime.
+                Sistem akan menentukan kegiatan yang sedang berlangsung
+                berdasarkan jam mulai dan jam selesai.
+
+                <br><br>
+
+                Contoh:
+
+                <br>
+
+                Tahfidz — 07:00 sampai 09:00
+
+                <br>
+
+                Sosiologi — 09:00 sampai 10:30
+
+                <br><br>
+
+                Tepat pukul 09:00, Beranda otomatis berubah dari
+                Tahfidz menjadi Sosiologi.
+
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================
+     MOBILE NAV
+========================= -->
+
+<div class="bottom-nav">
+
+    <button
+        class="active"
+        data-page="home">
+
+        <span>⌂</span>
+        Beranda
+
+    </button>
+
+    <button data-page="todo">
+
+        <span>✓</span>
+        To-Do
+
+    </button>
+
+    <button data-page="calculator">
+
+        <span>▣</span>
+        Calculator
+
+    </button>
+
+    <button data-page="money">
+
+        <span>◈</span>
+        Money
+
+    </button>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const STORAGE = {
+
+    money:"thoha_os_money",
+
+    todos:"thoha_os_todos",
+
+    schedule:"thoha_os_schedule"
+
+};
+
+
+/* =====================================================
+   DEFAULT SCHEDULE
+===================================================== */
+
+const defaultSchedule = {
+
+    1:[
+        {
+            start:"06:30",
+            end:"07:00",
+            name:"Masuk"
+        },
+
+        {
+            start:"07:00",
+            end:"09:00",
+            name:"Bahasa Inggris Lanjutan"
+        },
+      {
+        start : "09.30",
+        end : "09.45",
+        name : "Istirahat 1"
+          },
+
+        {
+            start:"09:45",
+            end:"11.15",
+            name:"Ekonomi Lanjutan"
+        },
+
+        {
+            start:"11.15",
+            end:"11:30",
+            name:"Istirahat 2"
+        },
+
+        {
+            start:"11:30",
+            end:"12:15",
+            name:"Pendidikan Pancasila"
+        },
+
+        {
+            start:"12:15",
+            end:"14.30",
+            name:"Sejarah Kebudayaan Islam"
+        },
+
+        {
+            start:"14.30",
+            end:"14.45",
+            name:"Istirahat 3"
+        },
+
+        {
+            start:"14.45",
+            end:"16.15",
+            name:"Tahfidz"
+        },
+      {
+            start : "16.15",
+            end: "16.30",
+            name :"Pulang"
+  }
+              
+    ],
+  
+
+    2:[
+        {
+            start:"06:30",
+            end:"07:00",
+            name:"Masuk"
+        },
+
+        {
+            start:"07:00",
+            end:"08:00",
+            name:"Sosiologi Lanjutan"
+        },
+
+        {
+            start:"08:00",
+            end:"09:30",
+            name:"Fikih"
+        },
+
+        {
+            start:"09:30",
+            end:"09.45",
+            name:"Istirahat 1"
+        },
+
+        {
+            start:"09.45",
+            end:"11.15",
+            name:"Matematika"
+        },
+
+        {
+            start:"11.15",
+            end:"11.30",
+            name:"Istirahat 2"
+        },
+
+        {
+            start:"11.30",
+            end:"14.30",
+            name:"Bahasa Inggris"
+        },
+
+        {
+            start:"14.30",
+            end:"14.45",
+            name:"Istirahat 3"
+        },
+      {
+            start:"14.45",
+            end:"16.15",
+           name:"Bahasa Inggris Lanjutan"
+  },
+      {
+        start:"16.15",
+        end:"16.30",
+        name:"Pulang"
+
+          },
+
+    
+
+        
+     
+      
+    ],
+
+    3:[
+        {
+            start:"06:30",
+            end:"07:00",
+            name:"Masuk"
+        },
+
+        {
+            start:"07:00",
+            end:"08:00",
+            name:"PJOK"
+        },
+
+        {
+            start:"08:00",
+            end:"09:30",
+            name:"Al-Qur'an Hadist"
+        },
+
+        {
+            start:"09:30",
+            end:"09.45",
+            name:"Istirahat 1"
+        },
+
+        {
+            start:"09.45",
+            end:"10:30",
+            name:"Pendidikan Pancasila"
+        },
+
+        {
+            start:"10:30",
+            end:"11.15",
+            name:"Akidah Akhlak"
+        },
+
+        {
+            start:"11.15",
+            end:"11.30",
+            name:"Istirahat 2"
+        },
+
+        {
+            start:"11:30",
+            end:"13.45",
+            name:"Fisika Lanjutan"
+        },
+      {
+            start:"14.30",
+            end:"14.45",
+            name:"Istirahat 3"
+    },
+      {
+            start:"14.45",
+            end:"16.15",
+            name:"Sosiologi Lanjutan"
+
+      },
+      {
+            start:"16.15",
+            end:"16.30",
+            name:"Pulang"
+
+      }
+  
+    ],
+
+    4:[
+        {
+            start:"06:30",
+            end:"07:00",
+            name:"Masuk"
+        },
+
+        {
+            start:"07:00",
+            end:"08:00",
+            name:"Prakarya"
+        },
+
+        {
+            start:"08:00",
+            end:"09.30",
+            name:"Seni Budaya"
+        },
+
+        {
+            start:"10:30",
+            end:"10:45",
+            name:"Istirahat 1"
+        },
+
+        {
+            start:"10.45",
+            end:"11.15",
+            name:"Bahasa Indonesia"
+        },
+
+        {
+            start:"11.15",
+            end:"11.30",
+            name:"Istirahat 2"
+        },
+
+        {
+            start:"11.30",
+            end:"12.15",
+            name:"Sosiologi Lanjutan"
+        },
+
+        {
+            start:"12.15",
+            end:"13.45",
+            name:"Fisika Lanjutan"
+        },
+      {
+            start:"13.45",
+            end:"14.00",
+            name:"pulang"
+  }
+    ],
+
+    5:[
+        {
+            start:"06:30",
+            end:"07:00",
+            name:"Masuk"
+        },
+
+        {
+            start:"07:00",
+            end:"08.00",
+            name:"Sejarah"
+        },
+
+        {
+            start:"08.00",
+            end:"09:30",
+            name:"Bahasa Arab"
+        },
+
+        {
+            start:"09.30",
+            end:"09.45",
+            name:"Istirahat 1"
+        },
+
+        {
+            start:"09.45",
+            end:"11.15",
+            name:"Ekonomi Lanjutan"
+        },
+
+        {
+            start:"11.15",
+            end:"11.20",
+            name:"Pulang"
+        },
+
+     ],       
+    
+
+    0:[]
+
+};
+
+
+/* =====================================================
+   LOAD DATA
+===================================================== */
+
+let money =
+    JSON.parse(
+        localStorage.getItem(STORAGE.money)
+    ) || [];
+
+let todos =
+    JSON.parse(
+        localStorage.getItem(STORAGE.todos)
+    ) || [];
+
+let schedule =
+    JSON.parse(
+        localStorage.getItem(STORAGE.schedule)
+    ) || defaultSchedule;
+
+
+function saveData(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(element=>{
+            element.classList.remove("active");
+        });
+
+
+    document
+        .querySelectorAll("[data-page]")
+        .forEach(button=>{
+            button.classList.remove("active");
+        });
+
+
+    const target =
+        document.getElementById(page);
+
+    if(target){
+        target.classList.add("active");
+    }
+
+
+    document
+        .querySelectorAll(
+            `[data-page="${page}"]`
+        )
+        .forEach(button=>{
+            button.classList.add("active");
+        });
+
+
+    if(page === "schedule"){
+        renderScheduleEditor();
+    }
+
+}
+
+
+document
+    .querySelectorAll("[data-page]")
+    .forEach(button=>{
+
+        button.addEventListener(
+            "click",
+            ()=>{
+                showPage(button.dataset.page);
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function rupiah(number){
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style:"currency",
+            currency:"IDR",
+            maximumFractionDigits:0
+        }
+    ).format(number || 0);
+
+}
+
+
+function timeToMinutes(time){
+
+    const parts =
+        time.split(":").map(Number);
+
+    return parts[0] * 60 + parts[1];
+
+}
+
+
+function formatDate(date){
+
+    return new Intl.DateTimeFormat(
+        "id-ID",
+        {
+            weekday:"long",
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        }
+    ).format(date);
+
+}
+
+
+function getTodaySchedule(){
+
+    const day =
+        new Date().getDay();
+
+    return schedule[day] || [];
+
+}
+
+
+/* =====================================================
+   CLOCK
+===================================================== */
+
+function updateClock(){
+
+    const now =
+        new Date();
+
+
+    document.getElementById(
+        "clock"
+    ).textContent =
+        now.toLocaleTimeString(
+            "id-ID",
+            {
+                hour12:false
+            }
+        );
+
+
+    document.getElementById(
+        "date"
+    ).textContent =
+        formatDate(now);
+
+
+    updateSchedule();
+
+}
+
+
+setInterval(
+    updateClock,
+    1000
+);
+
+
+/* =====================================================
+   SCHEDULE ENGINE
+===================================================== */
+
+function updateSchedule(){
+
+    const now =
+        new Date();
+
+
+    const current =
+        now.getHours() * 60 +
+        now.getMinutes() +
+        now.getSeconds() / 60;
+
+
+    const today =
+        getTodaySchedule();
+
+
+    const dayName =
+        new Intl.DateTimeFormat(
+            "id-ID",
+            {
+                weekday:"long"
+            }
+        ).format(now);
+
+
+    document.getElementById(
+        "scheduleDay"
+    ).textContent =
+        dayName.toUpperCase();
+
+
+    if(!today.length){
+
+        document.getElementById(
+            "scheduleLabel"
+        ).textContent =
+            "TIDAK ADA JADWAL";
+
+
+        document.getElementById(
+            "currentSubject"
+        ).textContent =
+            "Hari kosong";
+
+
+        document.getElementById(
+            "currentTime"
+        ).textContent =
+            "";
+
+
+        document.getElementById(
+            "countdown"
+        ).textContent =
+            "Nikmati harimu.";
+
+
+        document.getElementById(
+            "nextName"
+        ).textContent =
+            "—";
+
+
+        document.getElementById(
+            "nextTime"
+        ).textContent =
+            "—";
+
+
+        renderHomeSchedule();
+
+        return;
+
+    }
+
+
+    let active = null;
+    let next = null;
+
+
+    for(let i=0;i<today.length;i++){
+
+        const item =
+            today[i];
+
+        const start =
+            timeToMinutes(item.start);
+
+        const end =
+            timeToMinutes(item.end);
+
+
+        if(
+            current >= start &&
+            current < end
+        ){
+
+            active = item;
+
+            next =
+                today[i + 1] || null;
+
+            break;
+
+        }
+
+
+        if(current < start){
+
+            next = item;
+
+            break;
+
+        }
+
+    }
+
+
+    if(active){
+
+        document.getElementById(
+            "scheduleLabel"
+        ).textContent =
+            "SEDANG BERLANGSUNG";
+
+
+        document.getElementById(
+            "currentSubject"
+        ).textContent =
+            active.name;
+
+
+        document.getElementById(
+            "currentTime"
+        ).textContent =
+            `${active.start} — ${active.end}`;
+
+
+        const end =
+            timeToMinutes(active.end);
+
+
+        const remaining =
+            Math.max(
+                0,
+                Math.floor(end - current)
+            );
+
+
+        if(remaining >= 60){
+
+            const hours =
+                Math.floor(remaining / 60);
+
+            const minutes =
+                remaining % 60;
+
+
+            document.getElementById(
+                "countdown"
+            ).textContent =
+                `Berakhir dalam ${hours} jam ${minutes} menit`;
+
+        }else{
+
+            document.getElementById(
+                "countdown"
+            ).textContent =
+                `Berakhir dalam ${remaining} menit`;
+
+        }
+
+    }else{
+
+        if(
+            current <
+            timeToMinutes(today[0].start)
+        ){
+
+            document.getElementById(
+                "scheduleLabel"
+            ).textContent =
+                "BELUM DIMULAI";
+
+
+            document.getElementById(
+                "currentSubject"
+            ).textContent =
+                "Sekolah belum dimulai";
+
+
+            document.getElementById(
+                "countdown"
+            ).textContent =
+                `Mulai pukul ${today[0].start}`;
+
+        }else{
+
+            document.getElementById(
+                "scheduleLabel"
+            ).textContent =
+                "SEKOLAH SELESAI";
+
+
+            document.getElementById(
+                "currentSubject"
+            ).textContent =
+                "Sekolah selesai";
+
+
+            document.getElementById(
+                "currentTime"
+            ).textContent =
+                "";
+
+
+            document.getElementById(
+                "countdown"
+            ).textContent =
+                "Sampai jumpa besok.";
+
+        }
+
+    }
+
+
+    if(next){
+
+        document.getElementById(
+            "nextName"
+        ).textContent =
+            next.name;
+
+
+        document.getElementById(
+            "nextTime"
+        ).textContent =
+            next.start;
+
+    }else{
+
+        document.getElementById(
+            "nextName"
+        ).textContent =
+            "Sekolah besok";
+
+
+        document.getElementById(
+            "nextTime"
+        ).textContent =
+            "06:30";
+
+    }
+
+
+    renderHomeSchedule();
+
+}
+
+
+/* =====================================================
+   HOME SCHEDULE LIST
+===================================================== */
+
+function renderHomeSchedule(){
+
+    const today =
+        getTodaySchedule();
+
+
+    const now =
+        new Date();
+
+
+    const current =
+        now.getHours() * 60 +
+        now.getMinutes();
+
+
+    document.getElementById(
+        "scheduleCount"
+    ).textContent =
+        `${today.length} kegiatan`;
+
+
+    const container =
+        document.getElementById(
+            "homeSchedule"
+        );
+
+
+    container.innerHTML = "";
+
+
+    today.forEach(item=>{
+
+        const start =
+            timeToMinutes(item.start);
+
+        const end =
+            timeToMinutes(item.end);
+
+
+        let className = "";
+        let status = "";
+
+
+        if(
+            current >= start &&
+            current < end
+        ){
+
+            className = "active";
+            status = "NOW";
+
+        }else if(
+            current >= end
+        ){
+
+            className = "past";
+            status = "DONE";
+
+        }else{
+
+            status = "NEXT";
+
+        }
+
+
+        container.innerHTML += `
+
+            <div class="activity ${className}">
+
+                <div class="activity-time">
+                    ${item.start}
+                </div>
+
+                <div class="activity-name">
+                    ${item.name}
+                </div>
+
+                <div class="activity-status">
+                    ${status}
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   MONEY
+===================================================== */
+
+function getMoneyTotals(){
+
+    let income = 0;
+    let expense = 0;
+
+
+    money.forEach(item=>{
+
+        if(item.type === "income"){
+
+            income +=
+                Number(item.amount);
+
+        }else{
+
+            expense +=
+                Number(item.amount);
+
+        }
+
+    });
+
+
+    return {
+        income,
+        expense,
+        balance:income - expense
+    };
+
+}
+
+
+function renderMoney(){
+
+    const totals =
+        getMoneyTotals();
+
+
+    document.getElementById(
+        "moneyBalance"
+    ).textContent =
+        rupiah(totals.balance);
+
+
+    document.getElementById(
+        "moneyIncome"
+    ).textContent =
+        rupiah(totals.income);
+
+
+    document.getElementById(
+        "moneyExpense"
+    ).textContent =
+        rupiah(totals.expense);
+
+
+    document.getElementById(
+        "homeBalance"
+    ).textContent =
+        rupiah(totals.balance);
+
+
+    document.getElementById(
+        "homeIncome"
+    ).textContent =
+        rupiah(totals.income);
+
+
+    document.getElementById(
+        "homeExpense"
+    ).textContent =
+        rupiah(totals.expense);
+
+
+    const table =
+        document.getElementById(
+            "moneyTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if(!money.length){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    style="
+                        text-align:center;
+                        color:#777;
+                    ">
+
+                    Belum ada transaksi.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    money
+        .slice()
+        .reverse()
+        .forEach(item=>{
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${item.desc}
+                    </td>
+
+                    <td>
+
+                        <span class="badge">
+                            ${item.category}
+                        </span>
+
+                    </td>
+
+                    <td>
+                        ${item.date}
+                    </td>
+
+                    <td
+                        class="${
+                            item.type === "income"
+                            ? "amount-income"
+                            : "amount-expense"
+                        }">
+
+                        ${
+                            item.type === "income"
+                            ? "+"
+                            : "-"
+                        }
+
+                        ${rupiah(item.amount)}
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="
+                                deleteMoney('${item.id}')
+                            ">
+
+                            ×
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+}
+
+
+document
+    .getElementById("moneyForm")
+    .addEventListener(
+        "submit",
+        function(event){
+
+            event.preventDefault();
+
+
+            const item = {
+
+                id:
+                    Date.now().toString(),
+
+                desc:
+                    document.getElementById(
+                        "moneyDesc"
+                    ).value,
+
+                amount:
+                    Number(
+                        document.getElementById(
+                            "moneyAmount"
+                        ).value
+                    ),
+
+                type:
+                    document.getElementById(
+                        "moneyType"
+                    ).value,
+
+                category:
+                    document.getElementById(
+                        "moneyCategory"
+                    ).value,
+
+                date:
+                    new Date()
+                        .toLocaleDateString(
+                            "id-ID"
+                        )
+
+            };
+
+
+            money.push(item);
+
+            saveData(
+                STORAGE.money,
+                money
+            );
+
+
+            this.reset();
+
+            renderMoney();
+
+        }
+    );
+
+
+function deleteMoney(id){
+
+    money =
+        money.filter(
+            item=>item.id !== id
+        );
+
+
+    saveData(
+        STORAGE.money,
+        money
+    );
+
+
+    renderMoney();
+
+}
+
+
+function clearMoney(){
+
+    if(
+        confirm(
+            "Hapus semua transaksi?"
+        )
+    ){
+
+        money = [];
+
+        saveData(
+            STORAGE.money,
+            money
+        );
+
+        renderMoney();
+
+    }
+
+}
+
+
+/* =====================================================
+   TODO
+===================================================== */
+
+function renderTodos(){
+
+    const list =
+        document.getElementById(
+            "todoList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    const total =
+        todos.length;
+
+
+    const done =
+        todos.filter(
+            todo=>todo.done
+        ).length;
+
+
+    const remaining =
+        total - done;
+
+
+    const progress =
+        total
+        ? Math.round(
+            done / total * 100
+        )
+        : 0;
+
+
+    document.getElementById(
+        "todoTotal"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "todoDone"
+    ).textContent =
+        done;
+
+
+    document.getElementById(
+        "todoRemaining"
+    ).textContent =
+        remaining;
+
+
+    document.getElementById(
+        "todoProgressBar"
+    ).style.width =
+        progress + "%";
+
+
+    if(!total){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                Belum ada tugas.
+                Tambahkan tugas pertamamu.
+
+            </div>
+
+        `;
+
+    }
+
+
+    todos.forEach(todo=>{
+
+        list.innerHTML += `
+
+            <div class="todo-item">
+
+                <button
+                    class="check ${
+                        todo.done
+                        ? "done"
+                        : ""
+                    }"
+                    onclick="
+                        toggleTodo('${todo.id}')
+                    ">
+
+                    ${
+                        todo.done
+                        ? "✓"
+                        : ""
+                    }
+
+                </button>
+
+
+                <div class="todo-content">
+
+                    <h4
+                        class="${
+                            todo.done
+                            ? "done"
+                            : ""
+                        }">
+
+                        ${todo.text}
+
+                    </h4>
+
+                    <p>
+
+                        ${
+                            todo.date
+                            ? "Deadline: " + todo.date
+                            : "Tanpa deadline"
+                        }
+
+                        ${
+                            todo.priority === "high"
+                            ? " • Prioritas tinggi"
+                            : ""
+                        }
+
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="delete-btn"
+                    onclick="
+                        deleteTodo('${todo.id}')
+                    ">
+
+                    ×
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    renderHomeTasks();
+
+}
+
+
+function renderHomeTasks(){
+
+    const container =
+        document.getElementById(
+            "homeTasks"
+        );
+
+
+    container.innerHTML = "";
+
+
+    const total =
+        todos.length;
+
+
+    const done =
+        todos.filter(
+            todo=>todo.done
+        ).length;
+
+
+    const progress =
+        total
+        ? Math.round(
+            done / total * 100
+        )
+        : 0;
+
+
+    document.getElementById(
+        "taskProgressText"
+    ).textContent =
+        progress + "%";
+
+
+    document.getElementById(
+        "taskProgressBar"
+    ).style.width =
+        progress + "%";
+
+
+    const tasks =
+        todos
+            .filter(
+                todo=>!todo.done
+            )
+            .slice(0,4);
+
+
+    if(!tasks.length){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                Tidak ada tugas yang perlu
+                dikerjakan.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    tasks.forEach(todo=>{
+
+        container.innerHTML += `
+
+            <div class="task-item">
+
+                <button
+                    class="check"
+                    onclick="
+                        toggleTodo('${todo.id}')
+                    ">
+
+                </button>
+
+
+                <div class="task-text">
+                    ${todo.text}
+                </div>
+
+
+                <div class="task-date">
+                    ${todo.date || ""}
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+document
+    .getElementById("todoForm")
+    .addEventListener(
+        "submit",
+        function(event){
+
+            event.preventDefault();
+
+
+            todos.push({
+
+                id:
+                    Date.now().toString(),
+
+                text:
+                    document.getElementById(
+                        "todoInput"
+                    ).value,
+
+                date:
+                    document.getElementById(
+                        "todoDate"
+                    ).value,
+
+                priority:
+                    document.getElementById(
+                        "todoPriority"
+                    ).value,
+
+                done:false
+
+            });
+
+
+            saveData(
+                STORAGE.todos,
+                todos
+            );
+
+
+            this.reset();
+
+            renderTodos();
+
+        }
+    );
+
+
+function toggleTodo(id){
+
+    todos =
+        todos.map(
+            todo=>{
+
+                if(todo.id === id){
+
+                    return {
+                        ...todo,
+                        done:!todo.done
+                    };
+
+                }
+
+                return todo;
+
+            }
+        );
+
+
+    saveData(
+        STORAGE.todos,
+        todos
+    );
+
+
+    renderTodos();
+
+}
+
+
+function deleteTodo(id){
+
+    todos =
+        todos.filter(
+            todo=>todo.id !== id
+        );
+
+
+    saveData(
+        STORAGE.todos,
+        todos
+    );
+
+
+    renderTodos();
+
+}
+
+
+/* =====================================================
+   BASIC CALCULATOR
+===================================================== */
+
+let currentCalc = "";
+
+
+function calcInput(value){
+
+    currentCalc += value;
+
+
+    document.getElementById(
+        "calcResult"
+    ).textContent =
+        currentCalc || "0";
+
+}
+
+
+function calcClear(){
+
+    currentCalc = "";
+
+
+    document.getElementById(
+        "calcExpression"
+    ).textContent = "";
+
+
+    document.getElementById(
+        "calcResult"
+    ).textContent = "0";
+
+}
+
+
+function calcBackspace(){
+
+    currentCalc =
+        currentCalc.slice(0,-1);
+
+
+    document.getElementById(
+        "calcResult"
+    ).textContent =
+        currentCalc || "0";
+
+}
+
+
+function calcEqual(){
+
+    try{
+
+        const expression =
+            currentCalc;
+
+
+        const result =
+            Function(
+                "return " + expression
+            )();
+
+
+        document.getElementById(
+            "calcExpression"
+        ).textContent =
+            expression + " =";
+
+
+        document.getElementById(
+            "calcResult"
+        ).textContent =
+            result;
+
+
+        currentCalc =
+            String(result);
+
+    }catch(error){
+
+        document.getElementById(
+            "calcResult"
+        ).textContent =
+            "Error";
+
+    }
+
+}
+
+
+/* =====================================================
+   FINANCE CALCULATOR
+===================================================== */
+
+function renderFinanceTool(){
+
+    const type =
+        document.getElementById(
+            "financeTool"
+        ).value;
+
+
+    const form =
+        document.getElementById(
+            "financeForm"
+        );
+
+
+    document.getElementById(
+        "financeResult"
+    ).innerHTML = "";
+
+
+    if(type === "discount"){
+
+        form.innerHTML = `
+
+            <div class="form">
+
+                <input
+                    type="number"
+                    id="f1"
+                    placeholder="Harga awal">
+
+                <input
+                    type="number"
+                    id="f2"
+                    placeholder="Diskon %">
+
+                <button
+                    class="btn gold-btn"
+                    onclick="financeCalculate()">
+
+                    Hitung
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(type === "installment"){
+
+        form.innerHTML = `
+
+            <div class="form">
+
+                <input
+                    type="number"
+                    id="f1"
+                    placeholder="Total harga">
+
+                <input
+                    type="number"
+                    id="f2"
+                    placeholder="Cicilan per minggu">
+
+                <button
+                    class="btn gold-btn"
+                    onclick="financeCalculate()">
+
+                    Hitung
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(type === "saving"){
+
+        form.innerHTML = `
+
+            <div class="form">
+
+                <input
+                    type="number"
+                    id="f1"
+                    placeholder="Target tabungan">
+
+                <input
+                    type="number"
+                    id="f2"
+                    placeholder="Tabungan per minggu">
+
+                <button
+                    class="btn gold-btn"
+                    onclick="financeCalculate()">
+
+                    Hitung
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(type === "percent"){
+
+        form.innerHTML = `
+
+            <div class="form">
+
+                <input
+                    type="number"
+                    id="f1"
+                    placeholder="Angka">
+
+                <input
+                    type="number"
+                    id="f2"
+                    placeholder="Persen %">
+
+                <button
+                    class="btn gold-btn"
+                    onclick="financeCalculate()">
+
+                    Hitung
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+function financeCalculate(){
+
+    const type =
+        document.getElementById(
+            "financeTool"
+        ).value;
+
+
+    const a =
+        Number(
+            document.getElementById(
+                "f1"
+            ).value
+        );
+
+
+    const b =
+        Number(
+            document.getElementById(
+                "f2"
+            ).value
+        );
+
+
+    const result =
+        document.getElementById(
+            "financeResult"
+        );
+
+
+    if(!a || !b){
+
+        result.innerHTML = `
+
+            <div class="tool-result">
+
+                Masukkan angka terlebih dahulu.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if(type === "discount"){
+
+        const discount =
+            a * b / 100;
+
+
+        result.innerHTML = `
+
+            <div class="tool-result">
+
+                Potongan:
+                <b>
+                    ${rupiah(discount)}
+                </b>
+
+                <br>
+
+                Harga akhir:
+                <b>
+                    ${rupiah(a-discount)}
+                </b>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(type === "installment"){
+
+        const weeks =
+            Math.ceil(a/b);
+
+
+        result.innerHTML = `
+
+            <div class="tool-result">
+
+                Butuh sekitar
+
+                <b>
+                    ${weeks} minggu
+                </b>
+
+                untuk melunasi.
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(type === "saving"){
+
+        const weeks =
+            Math.ceil(a/b);
+
+
+        result.innerHTML = `
+
+            <div class="tool-result">
+
+                Target tercapai dalam
+
+                <b>
+                    ${weeks} minggu
+                </b>
+
+                atau sekitar
+
+                <b>
+                    ${Math.ceil(weeks/4)} bulan
+                </b>.
+
+            </div>
+
+        `;
+
+    }
+
+
+    if(type === "percent"){
+
+        const resultValue =
+            a * b / 100;
+
+
+        result.innerHTML = `
+
+            <div class="tool-result">
+
+                ${b}% dari ${rupiah(a)}
+
+                =
+
+                <b>
+                    ${rupiah(resultValue)}
+                </b>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   CONVERTER
+===================================================== */
+
+function convertUnit(){
+
+    const value =
+        Number(
+            document.getElementById(
+                "convertValue"
+            ).value
+        );
+
+
+    const type =
+        document.getElementById(
+            "convertType"
+        ).value;
+
+
+    if(isNaN(value)){
+
+        document.getElementById(
+            "convertResult"
+        ).innerHTML = `
+
+            <div class="tool-result">
+
+                Masukkan angka terlebih dahulu.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let result = 0;
+    let unit = "";
+
+
+    if(type === "km"){
+
+        result = value * 1000;
+        unit = "meter";
+
+    }
+
+
+    if(type === "m"){
+
+        result = value * 100;
+        unit = "centimeter";
+
+    }
+
+
+    if(type === "kg"){
+
+        result = value * 1000;
+        unit = "gram";
+
+    }
+
+
+    if(type === "liter"){
+
+        result = value * 1000;
+        unit = "milliliter";
+
+    }
+
+
+    if(type === "hour"){
+
+        result = value * 60;
+        unit = "menit";
+
+    }
+
+
+    if(type === "minute"){
+
+        result = value * 60;
+        unit = "detik";
+
+    }
+
+
+    document.getElementById(
+        "convertResult"
+    ).innerHTML = `
+
+        <div class="tool-result">
+
+            ${value}
+            →
+            <b>
+                ${result} ${unit}
+            </b>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   SCHEDULE EDITOR
+===================================================== */
+
+function renderScheduleEditor(){
+
+    const day =
+        document.getElementById(
+            "scheduleDaySelect"
+        ).value;
+
+
+    const list =
+        schedule[day] || [];
+
+
+    const editor =
+        document.getElementById(
+            "scheduleEditor"
+        );
+
+
+    editor.innerHTML = "";
+
+
+    list.forEach(
+        (item,index)=>{
+
+            editor.innerHTML += `
+
+                <div class="schedule-row">
+
+                    <input
+                        type="time"
+                        value="${item.start}"
+                        data-index="${index}"
+                        data-field="start">
+
+
+                    <input
+                        type="text"
+                        value="${item.name}"
+                        data-index="${index}"
+                        data-field="name">
+
+
+                    <input
+                        type="time"
+                        value="${item.end}"
+                        data-index="${index}"
+                        data-field="end">
+
+
+                    <button
+                        class="remove-schedule"
+                        onclick="
+                            removeScheduleRow(${index})
+                        ">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+function addScheduleRow(){
+
+    const day =
+        document.getElementById(
+            "scheduleDaySelect"
+        ).value;
+
+
+    if(!schedule[day]){
+
+        schedule[day] = [];
+
+    }
+
+
+    schedule[day].push({
+
+        start:"16:00",
+
+        end:"17:00",
+
+        name:"Kegiatan baru"
+
+    });
+
+
+    renderScheduleEditor();
+
+}
+
+
+function removeScheduleRow(index){
+
+    const day =
+        document.getElementById(
+            "scheduleDaySelect"
+        ).value;
+
+
+    schedule[day].splice(
+        index,
+        1
+    );
+
+
+    renderScheduleEditor();
+
+}
+
+
+function saveSchedule(){
+
+    const day =
+        document.getElementById(
+            "scheduleDaySelect"
+        ).value;
+
+
+    const rows =
+        document.querySelectorAll(
+            "#scheduleEditor .schedule-row"
+        );
+
+
+    schedule[day] = [];
+
+
+    rows.forEach(row=>{
+
+        const inputs =
+            row.querySelectorAll(
+                "input"
+            );
+
+
+        schedule[day].push({
+
+            start:
+                inputs[0].value,
+
+            name:
+                inputs[1].value,
+
+            end:
+                inputs[2].value
+
+        });
+
+    });
+
+
+    schedule[day].sort(
+        (a,b)=>
+            timeToMinutes(a.start)
+            -
+            timeToMinutes(b.start)
+    );
+
+
+    saveData(
+        STORAGE.schedule,
+        schedule
+    );
+
+
+    updateSchedule();
+
+
+    alert(
+        "Jadwal berhasil disimpan."
+    );
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+renderMoney();
+
+renderTodos();
+
+renderFinanceTool();
+
+updateClock();
+
+  function updateGreeting() {
+    const hour = new Date().getHours();
+
+    let greeting;
+
+    if (hour >= 5 && hour < 12) {
+        greeting = "Good Morning";
+    } 
+    else if (hour >= 12 && hour < 17) {
+        greeting = "Good Evening";
+    } 
+    else {
+        greeting = "Good Night";
+    }
+
+    document.getElementById("greeting").innerHTML =
+        `${greeting}, <span>Thoha.</span>`;
+        }
+
+</script>
+
+</body>
+  </html>
